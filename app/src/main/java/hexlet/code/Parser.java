@@ -9,7 +9,7 @@ import java.util.Map;
 public class Parser {
     public static Map<String, Object> parse(String dataForParsing) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> result = mapper.readValue(dataForParsing, new TypeReference<>(){});
+        Map<String, Object> result = mapper.readValue(dataForParsing, new TypeReference<>() { });
         return result;
     }
 }
