@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.zip.DataFormatException;
 
 
@@ -60,7 +63,7 @@ public class Differ {
         Set<String> keys = new TreeSet<>(dataMap1.keySet());
         keys.addAll(dataMap2.keySet());
 
-        for(String key : keys) {
+        for (String key : keys) {
             if (!dataMap1.containsKey(key)) {
                 resultMap.put(key, "added");
             } else if (!dataMap2.containsKey(key)) {
@@ -95,7 +98,7 @@ public class Differ {
                         .append(dataMap2.get(elem.getKey())).append("\n");
             }
         }
-        result.append("}");
+        result.append("}\n");
         return result.toString();
     }
 }
