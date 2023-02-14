@@ -24,7 +24,9 @@ jobs:
         uses: paambaati/codeclimate-action@v3.0.0
         env:
            CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-           JACOCO_SOURCE_PATH: src/main/java
+           JACOCO_SOURCE_PATH: src/main/java ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
         with:
            coverageCommand: make report
            coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+      - name: Upload code climate report
+        command: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
