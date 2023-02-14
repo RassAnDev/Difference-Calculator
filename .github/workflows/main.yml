@@ -29,4 +29,4 @@ jobs:
            coverageCommand: make report
            coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
       - name: Upload code climate report
-        command: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+        run: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
