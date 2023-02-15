@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestStylish {
+public class DifferTest {
     static String file1;
     static String file2;
     static String expected;
