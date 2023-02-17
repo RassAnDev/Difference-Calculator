@@ -22,9 +22,21 @@ public class Differ {
         String formatOfFile1 = getFormat(inputPath1);
         String formatOfFile2 = getFormat(inputPath2);
 
-        Map<String, Object> dataMap1 = Parser.parse(dataFromFile1);
-        Map<String, Object> dataMap2 = Parser.parse(dataFromFile2);
+        Map<String, Object> dataMap1 = null;
+        Map<String, Object> dataMap2 = null;
         Map<String, String> resultMap;
+
+        if (formatOfFile1.equals("json") && formatOfFile2.equals("json")) {
+            dataMap1 = Parser.parseJson(dataFromFile1);
+            dataMap2 = Parser.parseJson(dataFromFile2);
+        } else if (formatOfFile1.equals("yaml") && formatOfFile2.equals("yaml")) {
+            dataMap1 = Parser.parseYaml(dataFromFile1);
+            dataMap2 = Parser.parseYaml(dataFromFile2);
+        }
+
+        if (dataMap1 == null && dataMap2 == null) {
+            throw new NullPointerException();
+        }
 
         if (formatOfFile1.equals(formatOfFile2)) {
             resultMap = compareData(dataMap1, dataMap2);
@@ -32,7 +44,7 @@ public class Differ {
             throw new DataFormatException();
         }
 
-        return getDefaultOutputFormat(resultMap, dataMap1, dataMap2);
+        return getResultOutputFormat(resultMap, dataMap1, dataMap2);
     }
 
     public static String generate(String inputPath1, String inputPath2) throws Exception {
@@ -53,6 +65,8 @@ public class Differ {
 
         if (format.endsWith(".json")) {
             resultFormat = "json";
+        } else if (format.endsWith(".yaml") || format.endsWith(".yml")) {
+            resultFormat = "yaml";
         }
         return resultFormat;
     }
@@ -77,7 +91,7 @@ public class Differ {
         return resultMap;
     }
 
-    private static String getDefaultOutputFormat(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
+    private static String getResultOutputFormat(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
                                                  Map<String, Object> dataMap2) {
         StringBuilder result = new StringBuilder("{\n");
 
