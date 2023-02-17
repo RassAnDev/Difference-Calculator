@@ -52,14 +52,28 @@ public class Differ {
         return generate(inputPath1, inputPath2, defaultFormat);
     }
 
+    /**
+     * getting an absolute path to file from a given input path
+     */
     private static Path getAbsolutePath(String filePath) {
         return Paths.get(filePath).toAbsolutePath().normalize();
     }
 
+    /**
+     * reading data from files which were given
+     * @param file
+     * @return
+     * @throws IOException
+     */
     private static String getDataFromFile(Path file) throws IOException {
         return Files.readString(file);
     }
 
+    /**
+     * getting the formats of provided files
+     * @param format
+     * @return
+     */
     private static String getFormat(String format) {
         String resultFormat = "";
 
@@ -71,6 +85,12 @@ public class Differ {
         return resultFormat;
     }
 
+    /**
+     * comparing two files and finding differences
+     * @param dataMap1
+     * @param dataMap2
+     * @return
+     */
     private static Map<String, String> compareData(Map<String, Object> dataMap1, Map<String, Object> dataMap2) {
         Map<String, String> resultMap = new TreeMap<>();
 
@@ -91,6 +111,13 @@ public class Differ {
         return resultMap;
     }
 
+    /**
+     * getting the comparison result in the required format
+     * @param dataForFormat
+     * @param dataMap1
+     * @param dataMap2
+     * @return
+     */
     private static String getResultOutputFormat(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
                                                  Map<String, Object> dataMap2) {
         StringBuilder result = new StringBuilder("{\n");
