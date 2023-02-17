@@ -19,8 +19,8 @@ run-dist-stylish:
 
 run-dist-plain:
 	./build/install/app/bin/app -f plain
-	./src/main/resources/nestedFile1.yml
-	./src/main/resources/nestedFile2.yml
+	./src/main/resources/filepath1.yaml
+	./src/main/resources/filepath2.yaml
  
 run-dist-json:
 	./build/install/app/bin/app -f json
