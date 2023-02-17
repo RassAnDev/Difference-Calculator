@@ -13,19 +13,13 @@ run-dist:
 	./build/install/app/bin/app -h
 	
 run-dist-stylish:
-	./build/install/app/bin/app -f stylish
-	./src/main/resources/filepath1.json
-	./src/main/resources/filepath2.json
+	./build/install/app/bin/app -f stylish ./src/main/resources/filepath1.json ./src/main/resources/filepath2.json
 
 run-dist-plain:
-	./build/install/app/bin/app -f plain
-	./src/main/resources/filepath1.yaml
-	./src/main/resources/filepath2.yaml
+	./build/install/app/bin/app -f plain ./src/main/resources/filepath1.yaml ./src/main/resources/filepath2.yaml
  
 run-dist-json:
-	./build/install/app/bin/app -f json
-	./src/main/resources/nestedFile1.json
-	./src/main/resources/nestedFile2.yml
+	./build/install/app/bin/app -f json ./src/main/resources/nestedFile1.json ./src/main/resources/nestedFile2.yml
 
 run:
 	./gradlew run
