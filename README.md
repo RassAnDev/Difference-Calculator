@@ -4,5 +4,5 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bc7a38c49e8511ab91a9/test_coverage)](https://codeclimate.com/github/RassAnDev/java-project-71/test_coverage)
 
 **Examples of working this command line application:**
-[![asciicast](https://asciinema.org/a/Bc1PuVYEqgmbClLHSVgTgwjvV.svg)](https://asciinema.org/a/Bc1PuVYEqgmbClLHSVgTgwjvV)
-[![asciicast](https://asciinema.org/a/GAekdBvimRbHNkWtVQlphKhjK.svg)](https://asciinema.org/a/GAekdBvimRbHNkWtVQlphKhjK)
+[![asciicast](https://asciinema.org/a/4qPpd9CpkZBIpJofneGqrKWjP.svg)](https://asciinema.org/a/4qPpd9CpkZBIpJofneGqrKWjP)
+[![asciicast](https://asciinema.org/a/LXinJhlaAXJLsLW7XLslby1sk.svg)](https://asciinema.org/a/LXinJhlaAXJLsLW7XLslby1sk)
