@@ -1,4 +1,5 @@
 name: The Walking Dead
 type: series
+enemies: {good: Rick Grames, bad: Negan}
 source: AMC
-age: 18+
+age: 16+
