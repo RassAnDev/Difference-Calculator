@@ -1,31 +1,19 @@
 package hexlet.code;
 
+import hexlet.code.formatters.PlainFormatter;
+import hexlet.code.formatters.StylishFormatter;
+
 import java.util.Map;
 
 public class Formatter {
-    // getting the comparison result in the required format
-    public static String stylish(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
-                                 Map<String, Object> dataMap2) {
-        StringBuilder result = new StringBuilder("{\n");
-
-        for (Map.Entry<String, String> elem : dataForFormat.entrySet()) {
-            if (elem.getValue().equals("added")) {
-                result.append(" + ").append(elem.getKey()).append(": ")
-                        .append(dataMap2.get(elem.getKey())).append("\n");
-            } else if (elem.getValue().equals("deleted")) {
-                result.append(" - ").append(elem.getKey()).append(": ")
-                        .append(dataMap1.get(elem.getKey())).append("\n");
-            } else if (elem.getValue().equals("changed")) {
-                result.append(" - ").append(elem.getKey()).append(": ")
-                        .append(dataMap1.get(elem.getKey())).append("\n")
-                        .append(" + ").append(elem.getKey()).append(": ")
-                        .append(dataMap2.get(elem.getKey())).append("\n");
-            } else {
-                result.append("   ").append(elem.getKey()).append(": ")
-                        .append(dataMap2.get(elem.getKey())).append("\n");
-            }
+    public static String format(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
+                                Map<String, Object> dataMap2,  String requiredFormat) {
+        if (requiredFormat.equals("stylish")) {
+            return StylishFormatter.format(dataForFormat, dataMap1, dataMap2);
+        } else if (requiredFormat.equals("plain")) {
+            return PlainFormatter.format(dataForFormat,dataMap1, dataMap2);
+        } else {
+            throw new IllegalArgumentException();
         }
-        result.append("}\n");
-        return result.toString();
     }
 }
