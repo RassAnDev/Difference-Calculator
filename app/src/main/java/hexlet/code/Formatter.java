@@ -11,7 +11,7 @@ public class Formatter {
         if (requiredFormat.equals("stylish")) {
             return StylishFormatter.format(dataForFormat, dataMap1, dataMap2);
         } else if (requiredFormat.equals("plain")) {
-            return PlainFormatter.format(dataForFormat,dataMap1, dataMap2);
+            return PlainFormatter.format(dataForFormat, dataMap1, dataMap2);
         } else {
             throw new IllegalArgumentException();
         }
