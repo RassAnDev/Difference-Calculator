@@ -16,24 +16,24 @@ public class DifferTest {
     static String yamlFile2;
     static String expected;
     static String actual;
-    static Path directoryToResult;
+    static Path pathToResult;
     @BeforeAll
     public static void initData() {
-        Path directoryToJsonFile1 = Paths.get("src/test/resources/file1.json").toAbsolutePath().normalize();
-        Path directoryToJsonFile2 = Paths.get("src/test/resources/file2.json").toAbsolutePath().normalize();
-        Path directoryToYamlFile1 = Paths.get("src/test/resources/file1.yaml").toAbsolutePath().normalize();
-        Path directoryToYamlFile2 = Paths.get("src/test/resources/file2.yaml").toAbsolutePath().normalize();
-        jsonFile1 = directoryToJsonFile1.toString();
-        jsonFile2 = directoryToJsonFile2.toString();
-        yamlFile1 = directoryToYamlFile1.toString();
-        yamlFile2 = directoryToYamlFile2.toString();
+        Path pathToJsonFile1 = Paths.get("src/test/resources/file1.json").toAbsolutePath().normalize();
+        Path pathToJsonFile2 = Paths.get("src/test/resources/file2.json").toAbsolutePath().normalize();
+        Path pathToYamlFile1 = Paths.get("src/test/resources/file1.yaml").toAbsolutePath().normalize();
+        Path pathToYamlFile2 = Paths.get("src/test/resources/file2.yaml").toAbsolutePath().normalize();
+        jsonFile1 = pathToJsonFile1.toString();
+        jsonFile2 = pathToJsonFile2.toString();
+        yamlFile1 = pathToYamlFile1.toString();
+        yamlFile2 = pathToYamlFile2.toString();
     }
 
     @Test
-    public void testCorrectJsonResult() {
-        directoryToResult = Paths.get("src/test/resources/result_stylish.txt").toAbsolutePath().normalize();
+    public void testCorrectStylishResult() {
+        pathToResult = Paths.get("src/test/resources/result_stylish.txt").toAbsolutePath().normalize();
         try {
-            expected = Files.readString(directoryToResult);
+            expected = Files.readString(pathToResult);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -47,14 +47,30 @@ public class DifferTest {
 
     @Test
     public void testCorrectYamlResult() {
-        directoryToResult = Paths.get("src/test/resources/result_yaml.txt").toAbsolutePath().normalize();
+        pathToResult = Paths.get("src/test/resources/result_yaml.txt").toAbsolutePath().normalize();
         try {
-            expected = Files.readString(directoryToResult);
+            expected = Files.readString(pathToResult);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
             actual = Differ.generate(yamlFile1, yamlFile2);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCorrectPlainResult() {
+        pathToResult = Paths.get("src/test/resources/result_plain.txt").toAbsolutePath().normalize();
+        try {
+            expected = Files.readString(pathToResult);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            actual = Differ.generate(jsonFile1, jsonFile2, "plain");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
