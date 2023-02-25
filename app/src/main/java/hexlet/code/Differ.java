@@ -9,7 +9,6 @@ import java.util.TreeMap;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Objects;
-import java.util.zip.DataFormatException;
 
 
 public class Differ {
@@ -35,17 +34,13 @@ public class Differ {
             dataMap2 = Parser.parseYaml(dataFromFile2);
         }
 
-        if (dataMap1 == null && dataMap2 == null) {
-            throw new NullPointerException();
-        }
-
         if (formatOfFile1.equals(formatOfFile2)) {
             resultMap = compareData(dataMap1, dataMap2);
         } else {
-            throw new DataFormatException();
+            throw new IllegalArgumentException();
         }
 
-        return Formatter.stylish(resultMap, dataMap1, dataMap2);
+        return Formatter.format(resultMap, dataMap1, dataMap2, formatName);
     }
 
     public static String generate(String inputPath1, String inputPath2) throws Exception {
