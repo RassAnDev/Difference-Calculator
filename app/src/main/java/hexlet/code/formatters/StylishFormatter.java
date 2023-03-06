@@ -10,18 +10,18 @@ public class StylishFormatter {
 
         for (Map<String, Object> elem : listForFormatting) {
             if (elem.containsValue("added")) {
-                result.append(" + ").append(elem.get("key")).append(": ")
+                result.append("  + ").append(elem.get("key")).append(": ")
                         .append(elem.get("newValue")).append("\n");
             } else if (elem.containsValue("deleted")) {
-                result.append(" - ").append(elem.get("key")).append(": ")
+                result.append("  - ").append(elem.get("key")).append(": ")
                         .append(elem.get("oldValue")).append("\n");
             } else if (elem.containsValue("changed")) {
-                result.append(" - ").append(elem.get("key")).append(": ")
+                result.append("  - ").append(elem.get("key")).append(": ")
                         .append(elem.get("oldValue")).append("\n")
-                        .append(" + ").append(elem.get("key")).append(": ")
+                        .append("  + ").append(elem.get("key")).append(": ")
                         .append(elem.get("newValue")).append("\n");
             } else {
-                result.append("   ").append(elem.get("key")).append(": ")
+                result.append(" ".repeat(4)).append(elem.get("key")).append(": ")
                         .append(elem.get("newValue")).append("\n");
             }
         }
