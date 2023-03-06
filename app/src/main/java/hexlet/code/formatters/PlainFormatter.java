@@ -5,55 +5,54 @@ import java.util.Map;
 
 public class PlainFormatter {
     // getting the comparison result in the plain format
-    public static String format(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
-                                 Map<String, Object> dataMap2) {
+    public static String format(List<Map<String, Object>> listForFormatting) {
         StringBuilder result = new StringBuilder();
 
-        for (Map.Entry<String, String> elem : dataForFormat.entrySet()) {
-            if (elem.getValue().equals("added")) {
-                if (isComplexValue(dataMap2.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
+        for (Map<String, Object> elem : listForFormatting) {
+            if (elem.containsValue("added")) {
+                if (isComplexValue(elem.get("newValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
                             .append(" was added with value: [complex value]").append("\n");
-                } else if (isStringValue(dataMap2.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was added with value: ").append("'").append(dataMap2.get(elem.getKey()))
+                } else if (isStringValue(elem.get("newValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was added with value: ").append("'").append(elem.get("newValue"))
                             .append("'").append("\n");
                 } else {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was added with value: ").append(dataMap2.get(elem.getKey())).append("\n");
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was added with value: ").append(elem.get("newValue")).append("\n");
                 }
-            } else if (elem.getValue().equals("deleted")) {
-                result.append("Property ").append("'").append(elem.getKey()).append("'")
+            } else if (elem.containsValue("deleted")) {
+                result.append("Property ").append("'").append(elem.get("key")).append("'")
                         .append(" was removed").append("\n");
-            } else if (elem.getValue().equals("changed")) {
-                if (isComplexValue(dataMap1.get(elem.getKey())) && isComplexValue(dataMap2.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
+            } else if (elem.containsValue("changed")) {
+                if (isComplexValue(elem.get("oldValue")) && isComplexValue(elem.get("newValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
                             .append(" was updated. From [complex value] to [complex value]").append("\n");
-                } else if (isComplexValue(dataMap1.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was updated. From [complex value] to ").append(dataMap2.get(elem.getKey()))
+                } else if (isComplexValue(elem.get("oldValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was updated. From [complex value] to ").append(elem.get("newValue"))
                             .append("\n");
-                } else if (isComplexValue(dataMap2.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was updated. From ").append(dataMap1.get(elem.getKey()))
+                } else if (isComplexValue(elem.get("newValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was updated. From ").append(elem.get("oldValue"))
                             .append(" to [complex value]").append("\n");
-                } else if (isStringValue(dataMap1.get(elem.getKey())) && isStringValue(dataMap2.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was updated. From ").append("'").append(dataMap1.get(elem.getKey()))
-                            .append("'").append(" to ").append("'").append(dataMap2.get(elem.getKey())).append("'")
+                } else if (isStringValue(elem.get("oldValue"), elem.get("newValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was updated. From ").append("'").append(elem.get("oldValue"))
+                            .append("'").append(" to ").append("'").append(elem.get("newValue")).append("'")
                             .append("\n");
-                } else if (isStringValue(dataMap1.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was updated. From ").append("'").append(dataMap1.get(elem.getKey()))
-                            .append("'").append(" to ").append(dataMap2.get(elem.getKey())).append("\n");
-                } else if (isStringValue(dataMap2.get(elem.getKey()))) {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was updated. From ").append(dataMap1.get(elem.getKey())).append(" to ")
-                            .append("'").append(dataMap2.get(elem.getKey())).append("'").append("\n");
+                } else if (isStringValue(elem.get("oldValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was updated. From ").append("'").append(elem.get("oldValue"))
+                            .append("'").append(" to ").append(elem.get("newValue")).append("\n");
+                } else if (isStringValue(elem.get("newValue"))) {
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was updated. From ").append(elem.get("oldValue")).append(" to ")
+                            .append("'").append(elem.get("newValue")).append("'").append("\n");
                 } else {
-                    result.append("Property ").append("'").append(elem.getKey()).append("'")
-                            .append(" was updated. From ").append(dataMap1.get(elem.getKey()))
-                            .append(" to ").append(dataMap2.get(elem.getKey())).append("\n");
+                    result.append("Property ").append("'").append(elem.get("key")).append("'")
+                            .append(" was updated. From ").append(elem.get("oldValue"))
+                            .append(" to ").append(elem.get("newValue")).append("\n");
                 }
             }
         }
@@ -64,7 +63,12 @@ public class PlainFormatter {
         return elem instanceof Map<?, ?> || elem instanceof List<?>;
     }
 
+    private static boolean isStringValue(Object elem1, Object elem2) {
+        return elem1 instanceof String && elem2 instanceof String;
+    }
+
     private static boolean isStringValue(Object elem) {
-        return elem instanceof String;
+        String defaultElem = "";
+        return isStringValue(elem, defaultElem);
     }
 }
