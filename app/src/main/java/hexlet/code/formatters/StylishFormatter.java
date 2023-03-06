@@ -25,7 +25,7 @@ public class StylishFormatter {
                         .append(elem.get("newValue")).append("\n");
             }
         }
-        result.append("}\n");
+        result.append("}");
         return result.toString();
     }
 }
