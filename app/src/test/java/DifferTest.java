@@ -77,4 +77,19 @@ public class DifferTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void testCorrectJsonResult() {
+        pathToResult = Paths.get("src/test/resources/result_json.txt").toAbsolutePath().normalize();
+        try {
+            expected = Files.readString(pathToResult);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            actual = Differ.generate(jsonFile1, jsonFile2, "json");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(expected, actual);
+    }
 }
