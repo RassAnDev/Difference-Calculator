@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Set;
@@ -24,7 +26,7 @@ public class Differ {
 
         Map<String, Object> dataMap1 = new TreeMap<>();
         Map<String, Object> dataMap2 = new TreeMap<>();
-        Map<String, String> resultMap;
+        List<Map<String, Object>> resultOfComparing;
 
         if (formatOfFile1.equals("json") && formatOfFile2.equals("json")) {
             dataMap1 = Parser.parseJson(dataFromFile1);
@@ -35,12 +37,12 @@ public class Differ {
         }
 
         if (formatOfFile1.equals(formatOfFile2)) {
-            resultMap = compareData(dataMap1, dataMap2);
+            resultOfComparing = compareData(dataMap1, dataMap2);
         } else {
             throw new IllegalArgumentException();
         }
 
-        return Formatter.format(resultMap, dataMap1, dataMap2, formatName);
+        return Formatter.format(resultOfComparing, formatName);
     }
 
     public static String generate(String inputPath1, String inputPath2) throws Exception {
@@ -71,23 +73,37 @@ public class Differ {
     }
 
     // comparing two files and finding differences
-    private static Map<String, String> compareData(Map<String, Object> dataMap1, Map<String, Object> dataMap2) {
-        Map<String, String> resultMap = new TreeMap<>();
+    private static List<Map<String, Object>> compareData(Map<String, Object> dataMap1, Map<String, Object> dataMap2) {
+        List<Map<String, Object>> result = new ArrayList<>();
 
         Set<String> keys = new TreeSet<>(dataMap1.keySet());
         keys.addAll(dataMap2.keySet());
 
         for (String key : keys) {
+            Map<String, Object> resultMap = new TreeMap<>();
             if (!dataMap1.containsKey(key)) {
-                resultMap.put(key, "added");
+                resultMap.put("key", key);
+                resultMap.put("status", "added");
+                resultMap.put("newValue", dataMap2.get(key));
+                result.add(resultMap);
             } else if (!dataMap2.containsKey(key)) {
-                resultMap.put(key, "deleted");
+                resultMap.put("key", key);
+                resultMap.put("status", "deleted");
+                resultMap.put("oldValue", dataMap1.get(key));
+                result.add(resultMap);
             } else if (!(Objects.equals(dataMap2.get(key), dataMap1.get(key)))) {
-                resultMap.put(key, "changed");
+                resultMap.put("key", key);
+                resultMap.put("status", "changed");
+                resultMap.put("oldValue", dataMap1.get(key));
+                resultMap.put("newValue", dataMap2.get(key));
+                result.add(resultMap);
             } else {
-                resultMap.put(key, "unchanged");
+                resultMap.put("key", key);
+                resultMap.put("status", "unchanged");
+                resultMap.put("newValue", dataMap2.get(key));
+                result.add(resultMap);
             }
         }
-        return resultMap;
+        return result;
     }
 }
