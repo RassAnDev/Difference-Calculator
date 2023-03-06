@@ -1,28 +1,28 @@
 package hexlet.code.formatters;
 
+import java.util.List;
 import java.util.Map;
 
 public class StylishFormatter {
     // getting the comparison result in the stylish format
-    public static String format(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
-                                 Map<String, Object> dataMap2) {
+    public static String format(List<Map<String, Object>> listForFormatting) {
         StringBuilder result = new StringBuilder("{\n");
 
-        for (Map.Entry<String, String> elem : dataForFormat.entrySet()) {
-            if (elem.getValue().equals("added")) {
-                result.append(" + ").append(elem.getKey()).append(": ")
-                        .append(dataMap2.get(elem.getKey())).append("\n");
-            } else if (elem.getValue().equals("deleted")) {
-                result.append(" - ").append(elem.getKey()).append(": ")
-                        .append(dataMap1.get(elem.getKey())).append("\n");
-            } else if (elem.getValue().equals("changed")) {
-                result.append(" - ").append(elem.getKey()).append(": ")
-                        .append(dataMap1.get(elem.getKey())).append("\n")
-                        .append(" + ").append(elem.getKey()).append(": ")
-                        .append(dataMap2.get(elem.getKey())).append("\n");
+        for (Map<String, Object> elem : listForFormatting) {
+            if (elem.containsValue("added")) {
+                result.append(" + ").append(elem.get("key")).append(": ")
+                        .append(elem.get("newValue")).append("\n");
+            } else if (elem.containsValue("deleted")) {
+                result.append(" - ").append(elem.get("key")).append(": ")
+                        .append(elem.get("oldValue")).append("\n");
+            } else if (elem.containsValue("changed")) {
+                result.append(" - ").append(elem.get("key")).append(": ")
+                        .append(elem.get("oldValue")).append("\n")
+                        .append(" + ").append(elem.get("key")).append(": ")
+                        .append(elem.get("newValue")).append("\n");
             } else {
-                result.append("   ").append(elem.getKey()).append(": ")
-                        .append(dataMap2.get(elem.getKey())).append("\n");
+                result.append("   ").append(elem.get("key")).append(": ")
+                        .append(elem.get("newValue")).append("\n");
             }
         }
         result.append("}\n");
