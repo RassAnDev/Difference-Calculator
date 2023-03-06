@@ -52,7 +52,7 @@ public class PlainFormatter {
                 } else {
                     result.append("Property ").append("'").append(elem.get("key")).append("'")
                             .append(" was updated. From ").append(elem.get("oldValue"))
-                            .append(" to ").append(elem.get("newValue")).append("\n");
+                            .append(" to ").append(elem.get("newValue"));
                 }
             }
         }
