@@ -1,17 +1,20 @@
 package hexlet.code;
 
+import hexlet.code.formatters.JsonFormatter;
 import hexlet.code.formatters.PlainFormatter;
 import hexlet.code.formatters.StylishFormatter;
 
+import java.util.List;
 import java.util.Map;
 
 public class Formatter {
-    public static String format(Map<String, String> dataForFormat, Map<String, Object> dataMap1,
-                                Map<String, Object> dataMap2,  String requiredFormat) {
+    public static String format(List<Map<String, Object>> listForFormatting, String requiredFormat) throws Exception {
         if (requiredFormat.equals("stylish")) {
-            return StylishFormatter.format(dataForFormat, dataMap1, dataMap2);
+            return StylishFormatter.format(listForFormatting);
         } else if (requiredFormat.equals("plain")) {
-            return PlainFormatter.format(dataForFormat, dataMap1, dataMap2);
+            return PlainFormatter.format(listForFormatting);
+        } else if (requiredFormat.equals("json")) {
+            return JsonFormatter.format(listForFormatting);
         } else {
             throw new IllegalArgumentException();
         }
