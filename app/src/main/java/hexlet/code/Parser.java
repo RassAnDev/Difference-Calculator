@@ -8,6 +8,18 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Parser {
+    public static Map<String, Object> parse(String dataForParsing, String formatOfFile) throws IOException {
+        switch (formatOfFile) {
+            case "json":
+                return parseJson(dataForParsing);
+            case "yaml":
+            case "yml":
+                return parseYaml(dataForParsing);
+            default:
+                throw new IOException();
+        }
+    }
+
     public static Map<String, Object> parseJson(String dataForParsing) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(dataForParsing, new TypeReference<>() { });
