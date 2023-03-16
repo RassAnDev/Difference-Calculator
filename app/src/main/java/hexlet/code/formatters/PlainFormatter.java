@@ -9,54 +9,29 @@ public class PlainFormatter {
         StringBuilder result = new StringBuilder();
 
         for (Map<String, Object> elem : listForFormatting) {
-            if (elem.containsValue("added")) {
-                if (isComplexValue(elem.get("newValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was added with value: [complex value]").append("\n");
-                } else if (isStringValue(elem.get("newValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was added with value: ").append("'").append(elem.get("newValue"))
-                            .append("'").append("\n");
-                } else {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was added with value: ").append(elem.get("newValue")).append("\n");
-                }
-            } else if (elem.containsValue("deleted")) {
-                result.append("Property ").append("'").append(elem.get("key")).append("'")
-                        .append(" was removed").append("\n");
-            } else if (elem.containsValue("changed")) {
-                if (isComplexValue(elem.get("oldValue")) && isComplexValue(elem.get("newValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From [complex value] to [complex value]").append("\n");
-                } else if (isComplexValue(elem.get("oldValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From [complex value] to ").append(elem.get("newValue"))
-                            .append("\n");
-                } else if (isComplexValue(elem.get("newValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From ").append(elem.get("oldValue"))
-                            .append(" to [complex value]").append("\n");
-                } else if (isStringValue(elem.get("oldValue"), elem.get("newValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From ").append("'").append(elem.get("oldValue"))
-                            .append("'").append(" to ").append("'").append(elem.get("newValue")).append("'")
-                            .append("\n");
-                } else if (isStringValue(elem.get("oldValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From ").append("'").append(elem.get("oldValue"))
-                            .append("'").append(" to ").append(elem.get("newValue")).append("\n");
-                } else if (isStringValue(elem.get("newValue"))) {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From ").append(elem.get("oldValue")).append(" to ")
-                            .append("'").append(elem.get("newValue")).append("'").append("\n");
-                } else {
-                    result.append("Property ").append("'").append(elem.get("key")).append("'")
-                            .append(" was updated. From ").append(elem.get("oldValue"))
-                            .append(" to ").append(elem.get("newValue"));
-                }
+            String status = elem.get("status").toString();
+            String formattedNewValue = stringify(elem.get("newValue"));
+            String formattedOldValue = stringify(elem.get("oldValue"));
+
+            switch (status) {
+                case "added":
+                    result.append(getProperty(elem)).append("was added").append(" with value: ")
+                            .append(formattedNewValue).append("\n");
+                    break;
+                case "deleted":
+                    result.append(getProperty(elem)).append("was removed").append("\n");
+                    break;
+                case "changed":
+                    result.append(getProperty(elem)).append("was updated.").append(" From ")
+                            .append(formattedOldValue).append(" to ").append(formattedNewValue).append("\n");
+                    break;
+                case "unchanged":
+                    break;
+                default:
+                    throw new RuntimeException("Unknown status of element: '" + status + "'");
             }
         }
-        return result.toString();
+        return result.toString().trim();
     }
 
     private static boolean isComplexValue(Object elem) {
@@ -70,5 +45,20 @@ public class PlainFormatter {
     private static boolean isStringValue(Object elem) {
         String defaultElem = "";
         return isStringValue(elem, defaultElem);
+    }
+
+    private static String getProperty(Map<String, Object> elem) {
+        return "Property '" + elem.get("key") + "' ";
+    }
+
+    private static String stringify(Object value) {
+        if (isComplexValue(value)) {
+            return "[complex value]";
+        } else if (isStringValue(value)) {
+            return "'" + value.toString() + "'";
+        } else if (value == null) {
+            return "null";
+        }
+        return value.toString();
     }
 }
