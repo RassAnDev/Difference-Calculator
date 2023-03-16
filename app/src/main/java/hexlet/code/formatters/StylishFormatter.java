@@ -9,20 +9,29 @@ public class StylishFormatter {
         StringBuilder result = new StringBuilder("{\n");
 
         for (Map<String, Object> elem : listForFormatting) {
-            if (elem.containsValue("added")) {
-                result.append("  + ").append(elem.get("key")).append(": ")
-                        .append(elem.get("newValue")).append("\n");
-            } else if (elem.containsValue("deleted")) {
-                result.append("  - ").append(elem.get("key")).append(": ")
-                        .append(elem.get("oldValue")).append("\n");
-            } else if (elem.containsValue("changed")) {
-                result.append("  - ").append(elem.get("key")).append(": ")
-                        .append(elem.get("oldValue")).append("\n")
-                        .append("  + ").append(elem.get("key")).append(": ")
-                        .append(elem.get("newValue")).append("\n");
-            } else {
-                result.append(" ".repeat(4)).append(elem.get("key")).append(": ")
-                        .append(elem.get("newValue")).append("\n");
+            String status = elem.get("status").toString();
+
+            switch (status) {
+                case "added":
+                    result.append(" ".repeat(2)).append("+ ").append(elem.get("key")).append(": ")
+                            .append(elem.get("newValue")).append("\n");
+                    break;
+                case "deleted":
+                    result.append(" ".repeat(2)).append("- ").append(elem.get("key")).append(": ")
+                            .append(elem.get("oldValue")).append("\n");
+                    break;
+                case "changed":
+                    result.append(" ".repeat(2)).append("- ").append(elem.get("key")).append(": ")
+                            .append(elem.get("oldValue")).append("\n")
+                            .append("  + ").append(elem.get("key")).append(": ")
+                            .append(elem.get("newValue")).append("\n");
+                    break;
+                case "unchanged":
+                    result.append(" ".repeat(4)).append(elem.get("key")).append(": ")
+                            .append(elem.get("newValue")).append("\n");
+                    break;
+                default:
+                    throw new RuntimeException("Unknown status of element: '" + status + "'");
             }
         }
         result.append("}");
