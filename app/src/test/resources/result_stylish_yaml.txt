@@ -1,0 +1,11 @@
+{
+  + age: 16+
+  + enemies: {good=Rick Grames, bad=Negan}
+  - losers: [King of the Night, Daenerys Targaryen]
+  - name: Game of The Thrones
+  + name: The Walking Dead
+  - source: torrent.com
+  + source: AMC
+  - superhero: Arya Stark
+    type: series
+}

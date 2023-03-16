@@ -1,0 +1,6 @@
+Property 'age' was added with value: '16+'
+Property 'enemies' was added with value: [complex value]
+Property 'losers' was removed
+Property 'name' was updated. From 'Game of The Thrones' to 'The Walking Dead'
+Property 'source' was updated. From 'torrent.com' to 'AMC'
+Property 'superhero' was removed
