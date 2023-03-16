@@ -12,14 +12,29 @@ install:
 run-dist:
 	./build/install/app/bin/app -h
 	
-run-dist-stylish:
+run-dist-json-stylish:
 	./build/install/app/bin/app -f stylish ./src/main/resources/filepath1.json ./src/main/resources/filepath2.json
-
-run-dist-plain:
-	./build/install/app/bin/app -f plain ./src/main/resources/filepath1.yaml ./src/main/resources/filepath2.yaml
- 
+	
+run-dist-json-plain:
+	./build/install/app/bin/app -f plain ./src/main/resources/filepath1.json ./src/main/resources/filepath2.json
+	
 run-dist-json:
 	./build/install/app/bin/app -f json ./src/main/resources/filepath1.json ./src/main/resources/filepath2.json
+	
+run-dist-json-default:
+	./build/install/app/bin/app ./src/main/resources/filepath1.json ./src/main/resources/filepath2.json
+
+run-dist-yml-stylish:
+	./build/install/app/bin/app -f stylish ./src/main/resources/filepath1.yaml ./src/main/resources/filepath2.yaml
+	
+run-dist-yml-plain:
+	./build/install/app/bin/app -f plain ./src/main/resources/filepath1.yaml ./src/main/resources/filepath2.yaml
+	
+run-dist-yml-json:
+	./build/install/app/bin/app -f json ./src/main/resources/filepath1.yaml ./src/main/resources/filepath2.yaml
+ 
+run-dist-yml-default:
+	./build/install/app/bin/app ./src/main/resources/filepath1.yaml ./src/main/resources/filepath2.yaml
 
 run:
 	./gradlew run
