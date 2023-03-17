@@ -15,14 +15,14 @@ public class PlainFormatter {
 
             switch (status) {
                 case "added":
-                    result.append(getProperty(elem)).append("was added").append(" with value: ")
-                            .append(formattedNewValue).append("\n");
+                    result.append(getProperty(elem)).append("was added with value: ").append(formattedNewValue)
+                            .append("\n");
                     break;
                 case "deleted":
                     result.append(getProperty(elem)).append("was removed").append("\n");
                     break;
                 case "changed":
-                    result.append(getProperty(elem)).append("was updated.").append(" From ")
+                   result.append(getProperty(elem)).append("was updated. From ")
                             .append(formattedOldValue).append(" to ").append(formattedNewValue).append("\n");
                     break;
                 case "unchanged":
