@@ -17,30 +17,41 @@ public class Comparator {
         keys.addAll(dataMap2.keySet());
 
         for (String key : keys) {
-            Map<String, Object> resultMap = new TreeMap<>();
             if (!dataMap1.containsKey(key)) {
-                resultMap.put("key", key);
-                resultMap.put("status", "added");
-                resultMap.put("newValue", dataMap2.get(key));
-                result.add(resultMap);
+                result.add(addMapForNewValue(key, "added", dataMap2.get(key)));
             } else if (!dataMap2.containsKey(key)) {
-                resultMap.put("key", key);
-                resultMap.put("status", "deleted");
-                resultMap.put("oldValue", dataMap1.get(key));
-                result.add(resultMap);
+                result.add(addMapForOldValue(key, "deleted", dataMap1.get(key)));
             } else if (!(Objects.equals(dataMap2.get(key), dataMap1.get(key)))) {
-                resultMap.put("key", key);
-                resultMap.put("status", "changed");
-                resultMap.put("oldValue", dataMap1.get(key));
-                resultMap.put("newValue", dataMap2.get(key));
-                result.add(resultMap);
+                result.add(addMap(key, "changed", dataMap1.get(key), dataMap2.get(key)));
             } else {
-                resultMap.put("key", key);
-                resultMap.put("status", "unchanged");
-                resultMap.put("newValue", dataMap2.get(key));
-                result.add(resultMap);
+                result.add(addMapForNewValue(key, "unchanged", dataMap2.get(key)));
             }
         }
+        return result;
+    }
+
+    private static Map<String, Object> addMap(Object key, Object status, Object oldValue, Object newValue) {
+        Map<String, Object> result = new TreeMap<>();
+        result.put("key", key);
+        result.put("status", status);
+        result.put("oldValue", oldValue);
+        result.put("newValue", newValue);
+        return result;
+    }
+
+    private static Map<String, Object> addMapForNewValue(Object key, Object status, Object newValue) {
+        Map<String, Object> result = new TreeMap<>();
+        result.put("key", key);
+        result.put("status", status);
+        result.put("newValue", newValue);
+        return result;
+    }
+
+    private static Map<String, Object> addMapForOldValue(Object key, Object status, Object oldValue) {
+        Map<String, Object> result = new TreeMap<>();
+        result.put("key", key);
+        result.put("status", status);
+        result.put("oldValue", oldValue);
         return result;
     }
 }
