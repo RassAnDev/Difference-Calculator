@@ -10,18 +10,18 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
-    static String jsonFile1;
-    static String jsonFile2;
-    static String yamlFile1;
-    static String yamlFile2;
-    static String expected;
-    static String actual;
-    static Path stylishResult;
-    static Path plainResult;
-    static Path jsonResult;
-    static Path stylishYmlResult;
-    static Path plainYmlResult;
-    static Path jsonYmlResult;
+    private static String jsonFile1;
+    private static String jsonFile2;
+    private static String yamlFile1;
+    private static String yamlFile2;
+    private static String expected;
+    private static String actual;
+    private static Path stylishResult;
+    private static Path plainResult;
+    private static Path jsonResult;
+    private static Path stylishYmlResult;
+    private static Path plainYmlResult;
+    private static Path jsonYmlResult;
 
     @BeforeAll
     public static void initData() {
