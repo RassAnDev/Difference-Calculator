@@ -22,8 +22,8 @@ public class PlainFormatter {
                     result.append(getProperty(elem)).append("was removed").append("\n");
                     break;
                 case "changed":
-                   result.append(getProperty(elem)).append("was updated. From ")
-                            .append(formattedOldValue).append(" to ").append(formattedNewValue).append("\n");
+                    result.append(getProperty(elem)).append("was updated. From ")
+                           .append(formattedOldValue).append(" to ").append(formattedNewValue).append("\n");
                     break;
                 case "unchanged":
                     break;
