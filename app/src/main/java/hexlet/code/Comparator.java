@@ -18,13 +18,13 @@ public class Comparator {
 
         for (String key : keys) {
             if (!dataMap1.containsKey(key)) {
-                result.add(addMapForNewValue(key, "added", dataMap2.get(key)));
+                result.add(addMap(key, "added", "", dataMap2.get(key)));
             } else if (!dataMap2.containsKey(key)) {
-                result.add(addMapForOldValue(key, "deleted", dataMap1.get(key)));
+                result.add(addMap(key, "deleted", dataMap1.get(key), ""));
             } else if (!(Objects.equals(dataMap2.get(key), dataMap1.get(key)))) {
                 result.add(addMap(key, "changed", dataMap1.get(key), dataMap2.get(key)));
             } else {
-                result.add(addMapForNewValue(key, "unchanged", dataMap2.get(key)));
+                result.add(addMap(key, "unchanged", "", dataMap2.get(key)));
             }
         }
         return result;
@@ -32,26 +32,49 @@ public class Comparator {
 
     private static Map<String, Object> addMap(Object key, Object status, Object oldValue, Object newValue) {
         Map<String, Object> result = new TreeMap<>();
-        result.put("key", key);
-        result.put("status", status);
-        result.put("oldValue", oldValue);
-        result.put("newValue", newValue);
-        return result;
-    }
+        String stat = status.toString();
 
-    private static Map<String, Object> addMapForNewValue(Object key, Object status, Object newValue) {
-        Map<String, Object> result = new TreeMap<>();
-        result.put("key", key);
-        result.put("status", status);
-        result.put("newValue", newValue);
+        switch (stat) {
+            case "added":
+            case "unchanged":
+                result.put("key", key);
+                result.put("status", status);
+                result.put("newValue", newValue);
+                break;
+            case "deleted":
+                result.put("key", key);
+                result.put("status", status);
+                result.put("oldValue", oldValue);
+                break;
+            case "changed":
+                result.put("key", key);
+                result.put("status", status);
+                result.put("oldValue", oldValue);
+                result.put("newValue", newValue);
+                break;
+            default:
+                return result;
+        }
+//        result.put("key", key);
+//        result.put("status", status);
+//        result.put("oldValue", oldValue);
+//        result.put("newValue", newValue);
         return result;
     }
-
-    private static Map<String, Object> addMapForOldValue(Object key, Object status, Object oldValue) {
-        Map<String, Object> result = new TreeMap<>();
-        result.put("key", key);
-        result.put("status", status);
-        result.put("oldValue", oldValue);
-        return result;
-    }
+//
+//    private static Map<String, Object> addMapForNewValue(Object key, Object status, Object newValue) {
+//        Map<String, Object> result = new TreeMap<>();
+//        result.put("key", key);
+//        result.put("status", status);
+//        result.put("newValue", newValue);
+//        return result;
+//    }
+//
+//    private static Map<String, Object> addMapForOldValue(Object key, Object status, Object oldValue) {
+//        Map<String, Object> result = new TreeMap<>();
+//        result.put("key", key);
+//        result.put("status", status);
+//        result.put("oldValue", oldValue);
+//        return result;
+//    }
 }
