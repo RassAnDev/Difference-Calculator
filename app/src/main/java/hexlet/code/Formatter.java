@@ -17,16 +17,7 @@ public class Formatter {
             case "json":
                 return JsonFormatter.format(listForFormatting);
             default:
-                throw new IllegalArgumentException();
+                throw new Exception("This format is not supported: " + requiredFormat);
         }
-//        if (requiredFormat.equals("stylish")) {
-//            return StylishFormatter.format(listForFormatting);
-//        } else if (requiredFormat.equals("plain")) {
-//            return PlainFormatter.format(listForFormatting);
-//        } else if (requiredFormat.equals("json")) {
-//            return JsonFormatter.format(listForFormatting);
-//        } else {
-//            throw new IllegalArgumentException();
-//        }
     }
 }
