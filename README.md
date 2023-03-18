@@ -4,55 +4,67 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/bc7a38c49e8511ab91a9/maintainability)](https://codeclimate.com/github/RassAnDev/java-project-71/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bc7a38c49e8511ab91a9/test_coverage)](https://codeclimate.com/github/RassAnDev/java-project-71/test_coverage)
 
-## This application allows you to compare two files in .json or .yaml format, find the difference between them and display this difference as text formatted as "plain", "stylish" or "json" output
+## This application allows you to compare two files in .json or .yaml format, find the difference between them and display this difference as text formatted as "plain", "stylish" or "json" output.
 
 ## Setup
 ```sh
-make build```
+make build
+```
 
 ## Run
 ```sh
-make run-dist```
+make run-dist
+```
 
 ## Compare .json files and display in "stylish" output
 ```sh
-make run-dist-json-stylish```
+make run-dist-json-stylish
+```
 
 ## Compare .json files and display in "plain" output
 ```sh
-make run-dist-json-plain```
+make run-dist-json-plain
+```
 
 ## Compare .json files and display in "json" output
 ```sh
-make run-dist-json```
+make run-dist-json
+```
 
 ## Compare .json files and display in default output
 ```sh
-make run-dist-json-default```
+make run-dist-json-default
+```
 
 ## Compare .yaml files and display in "stylish" output
 ```sh
-make run-dist-yml-stylish```
+make run-dist-yml-stylish
+```
 
 ## Compare .yaml files and display in "plain" output
 ```sh
-make run-dist-yml-plain```
+make run-dist-yml-plain
+```
 
 ## Compare .yaml files and display in "json" output
 ```sh
-make run-dist-yml-json```
+make run-dist-yml-json
+```
 
 ## Compare .yaml files and display in default output
 ```sh
-make run-dist-yml-default```
+make run-dist-yml-default
+```
 
 ## Run tests
 ```sh
-make test```
+make test
+```
 
 ## Run linter
 ```sh
-make lint```
+make lint
+```
 
 ## Examples of working this command line application:
 [![asciicast](https://asciinema.org/a/4qPpd9CpkZBIpJofneGqrKWjP.svg)](https://asciinema.org/a/4qPpd9CpkZBIpJofneGqrKWjP)
