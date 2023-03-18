@@ -1,8 +1,8 @@
 import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,154 +10,53 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
-    private static String jsonFile1;
-    private static String jsonFile2;
-    private static String yamlFile1;
-    private static String yamlFile2;
-    private static String expected;
-    private static String actual;
-    private static Path stylishResult;
-    private static Path plainResult;
-    private static Path jsonResult;
-    private static Path stylishYmlResult;
-    private static Path plainYmlResult;
-    private static Path jsonYmlResult;
+    private static String resultStylish;
+    private static String resultPlain;
+    private static String resultJson;
+    private static String resultStylishYml;
+    private static String resultPlainYml;
+    private static String resultJsonYml;
 
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws Exception {
+        Path filePath = getFixturePath(fileName);
+        return Files.readString(filePath).trim();
+    }
     @BeforeAll
-    public static void initData() {
-        Path pathToJsonFile1 = Paths.get("src/test/resources/file1.json").toAbsolutePath().normalize();
-        Path pathToJsonFile2 = Paths.get("src/test/resources/file2.json").toAbsolutePath().normalize();
-        Path pathToYamlFile1 = Paths.get("src/test/resources/file1.yaml").toAbsolutePath().normalize();
-        Path pathToYamlFile2 = Paths.get("src/test/resources/file2.yaml").toAbsolutePath().normalize();
-        jsonFile1 = pathToJsonFile1.toString();
-        jsonFile2 = pathToJsonFile2.toString();
-        yamlFile1 = pathToYamlFile1.toString();
-        yamlFile2 = pathToYamlFile2.toString();
-        stylishResult = Paths.get("src/test/resources/result_stylish.txt").toAbsolutePath().normalize();
-        plainResult = Paths.get("src/test/resources/result_plain.txt").toAbsolutePath().normalize();
-        jsonResult = Paths.get("src/test/resources/result_json.txt").toAbsolutePath().normalize();
-        stylishYmlResult = Paths.get("src/test/resources/result_stylish_yaml.txt").toAbsolutePath().normalize();
-        plainYmlResult = Paths.get("src/test/resources/result_plain_yaml.txt").toAbsolutePath().normalize();
-        jsonYmlResult = Paths.get("src/test/resources/result_json_yaml.txt").toAbsolutePath().normalize();
+    public static void beforeAll() throws Exception {
+        resultStylish = readFixture("result_stylish.txt");
+        resultPlain = readFixture("result_plain.txt");
+        resultJson = readFixture("result_json.txt");
+        resultStylishYml = readFixture("result_stylish_yaml.txt");
+        resultPlainYml = readFixture("result_plain_yaml.txt");
+        resultJsonYml = readFixture("result_json_yaml.txt");
     }
 
-    @Test
-    public void testJsonToStylishFormat() {
-        try {
-            expected = Files.readString(stylishResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(jsonFile1, jsonFile2, "stylish");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
+    @ParameterizedTest
+    @ValueSource(strings = {"json"})
+    public void generateTestJson(String format) throws Exception {
+        String filePath1 = getFixturePath("file1." + format).toString();
+        String filePath2 = getFixturePath("file2." + format).toString();
+
+        assertEquals(Differ.generate(filePath1, filePath2, "stylish"), resultStylish);
+        assertEquals(Differ.generate(filePath1, filePath2, "plain"), resultPlain);
+        assertEquals(Differ.generate(filePath1, filePath2, "json"), resultJson);
+        assertEquals(Differ.generate(filePath1, filePath2), resultStylish);
     }
 
-    @Test
-    public void testJsonToPlainFormat() {
-        try {
-            expected = Files.readString(plainResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(jsonFile1, jsonFile2, "plain");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
-    }
+    @ParameterizedTest
+    @ValueSource(strings = {"yaml"})
+    public void generateTestYml(String format) throws Exception {
+        String filePath1 = getFixturePath("file1." + format).toString();
+        String filePath2 = getFixturePath("file2." + format).toString();
 
-    @Test
-    public void testJsonToJsonFormat() {
-        try {
-            expected = Files.readString(jsonResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(jsonFile1, jsonFile2, "json");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testJsonToDefaultFormat() {
-        try {
-            expected = Files.readString(stylishResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(jsonFile1, jsonFile2);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testYmlToStylishFormat() {
-        try {
-            expected = Files.readString(stylishYmlResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(yamlFile1, yamlFile2, "stylish");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testYmlToPlainFormat() {
-        try {
-            expected = Files.readString(plainYmlResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(yamlFile1, yamlFile2, "plain");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testYmlToJsonFormat() {
-        try {
-            expected = Files.readString(jsonYmlResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(yamlFile1, yamlFile2, "json");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testYmlToDefaultFormat() {
-        try {
-            expected = Files.readString(stylishYmlResult);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            actual = Differ.generate(yamlFile1, yamlFile2);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(expected, actual);
+        assertEquals(Differ.generate(filePath1, filePath2, "stylish"), resultStylishYml);
+        assertEquals(Differ.generate(filePath1, filePath2, "plain"), resultPlainYml);
+        assertEquals(Differ.generate(filePath1, filePath2, "json"), resultJsonYml);
+        assertEquals(Differ.generate(filePath1, filePath2), resultStylishYml);
     }
 }
