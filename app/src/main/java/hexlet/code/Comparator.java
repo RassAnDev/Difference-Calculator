@@ -55,26 +55,6 @@ public class Comparator {
             default:
                 return result;
         }
-//        result.put("key", key);
-//        result.put("status", status);
-//        result.put("oldValue", oldValue);
-//        result.put("newValue", newValue);
         return result;
     }
-//
-//    private static Map<String, Object> addMapForNewValue(Object key, Object status, Object newValue) {
-//        Map<String, Object> result = new TreeMap<>();
-//        result.put("key", key);
-//        result.put("status", status);
-//        result.put("newValue", newValue);
-//        return result;
-//    }
-//
-//    private static Map<String, Object> addMapForOldValue(Object key, Object status, Object oldValue) {
-//        Map<String, Object> result = new TreeMap<>();
-//        result.put("key", key);
-//        result.put("status", status);
-//        result.put("oldValue", oldValue);
-//        return result;
-//    }
 }
