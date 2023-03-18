@@ -38,7 +38,7 @@ public class DifferTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"json"})
-    public void generateTestJson(String format) throws Exception {
+    public final void generateTestJson(String format) throws Exception {
         String filePath1 = getFixturePath("file1." + format).toString();
         String filePath2 = getFixturePath("file2." + format).toString();
 
@@ -50,7 +50,7 @@ public class DifferTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"yaml"})
-    public void generateTestYml(String format) throws Exception {
+    public final void generateTestYml(String format) throws Exception {
         String filePath1 = getFixturePath("file1." + format).toString();
         String filePath2 = getFixturePath("file2." + format).toString();
 
